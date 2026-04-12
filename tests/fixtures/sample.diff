@@ -1,0 +1,46 @@
+diff --git a/requests/adapters.py b/requests/adapters.py
+index abc1234..def5678 100644
+--- a/requests/adapters.py
++++ b/requests/adapters.py
+@@ -1,6 +1,8 @@
+ import os
+ import socket
++import time
++import logging
+ from urllib3.util import Retry
+ from urllib3.util.url import parse_url
+ 
+@@ -47,6 +49,10 @@ class HTTPAdapter:
+     def send(self, request, **kwargs):
+         timeout = kwargs.get('timeout')
++        if timeout is None:
++            timeout = self.DEFAULT_TIMEOUT
++        
++        logger.debug("Sending request to %s", request.url)
+         conn = self.get_connection(request.url)
+         return conn.urlopen(method=request.method,
+                             url=request.path_url)
+diff --git a/requests/models.py b/requests/models.py
+index 111aaaa..222bbbb 100644
+--- a/requests/models.py
++++ b/requests/models.py
+@@ -10,3 +10,7 @@ class Response:
+     def __init__(self):
+         self.status_code = None
+         self.headers = {}
++        self.elapsed = None
++
++    def raise_for_status(self):
++        if self.status_code >= 400:
++            raise HTTPError(self.status_code)
+diff --git a/requests/new_module.py b/requests/new_module.py
+new file mode 100644
+index 0000000..abc9999
+--- /dev/null
++++ b/requests/new_module.py
+@@ -0,0 +1,5 @@
++"""New utility module."""
++
++
++def helper():
++    return True

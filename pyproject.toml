@@ -1,0 +1,3 @@
+# pyproject.toml - minimal, just for pytest config
+[tool.pytest.ini_options]
+testpaths = ["tests"]
