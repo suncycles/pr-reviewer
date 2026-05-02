@@ -190,7 +190,7 @@ def review(
             for f in files:
                 db.save_hunk_hashes(review_id, f.path, f.hunks)
 
-            if result.comments and not no_post:
+            if not no_post:
                 progress.update(t3, description="Posting review to GitHub…")
                 github_comments = [c.to_github_payload() for c in result.comments]
                 db.save_comments(

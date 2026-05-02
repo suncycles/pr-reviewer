@@ -241,6 +241,9 @@ class Reviewer:
         return self._parse(raw, window, response.usage)
 
     def _parse(self, raw: str, window: Window, usage) -> ReviewResult:
+        # print("\n=== RAW CLAUDE RESPONSE ===")
+        # print(raw)
+        # print("=== END RAW RESPONSE ===\n")
         # Attempt direct JSON parse
         try:
             data = json.loads(raw)
